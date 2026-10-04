@@ -29,7 +29,7 @@ import (
 	"github.com/bygui86/multi-profile/v2"
 	"github.com/dustin/go-humanize"
 	"github.com/felixge/fgprof"
-	"github.com/minio/dperf/pkg/dperf"
+	"github.com/lgcorzo/dperf/pkg/dperf"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )

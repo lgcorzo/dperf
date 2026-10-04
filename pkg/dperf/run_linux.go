@@ -26,7 +26,7 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/minio/pkg/v3/rng"
+	"github.com/lgcorzo/pkg/v3/rng"
 	"github.com/ncw/directio"
 	"golang.org/x/sys/unix"
 )
