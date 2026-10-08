@@ -26,7 +26,7 @@ import (
 	"path/filepath"
 	"time"
 
-	"github.com/bygui86/multi-profile/v2"
+	profile "github.com/bygui86/multi-profile/v2"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/x/term"
 	"github.com/dustin/go-humanize"
