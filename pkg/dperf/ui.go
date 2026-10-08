@@ -94,17 +94,19 @@ func NewUIModel(paths []string, writeOnly, verbose bool) *UIModel {
 	return m
 }
 
+// Init initializes the UI model.
 func (m *UIModel) Init() tea.Cmd {
 	return nil
 }
 
+// Update handles UI messages and updates state.
 func (m *UIModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch msg := msg.(type) {
 	case tea.WindowSizeMsg:
 		m.width = msg.Width
 		m.height = msg.Height
 		// Update progress bar widths
-		barWidth := min(40, m.width-50)
+		barWidth := minInt(40, m.width-50)
 		if barWidth < 10 {
 			barWidth = 10
 		}
@@ -174,6 +176,7 @@ func (m *UIModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	return m, nil
 }
 
+// View renders the current UI state.
 func (m *UIModel) View() string {
 	if m.Complete {
 		// Show final results
@@ -390,7 +393,7 @@ func (m *UIModel) renderDriveComplete(result *DrivePerfResult) string {
 	return b.String()
 }
 
-func min(a, b int) int {
+func minInt(a, b int) int {
 	if a < b {
 		return a
 	}

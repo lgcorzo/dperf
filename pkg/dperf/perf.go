@@ -29,13 +29,13 @@ import (
 
 // ProgressUpdate represents a real-time progress update for a drive test
 type ProgressUpdate struct {
-	Path            string
-	Phase           string // "write" or "read"
-	BytesProcessed  uint64
-	TotalBytes      uint64
-	Throughput      uint64 // bytes per second
-	IOIndex         int    // which concurrent I/O operation (0 to IOPerDrive-1)
-	Error           error
+	Path           string
+	Phase          string // "write" or "read"
+	BytesProcessed uint64
+	TotalBytes     uint64
+	Throughput     uint64 // bytes per second
+	IOIndex        int    // which concurrent I/O operation (0 to IOPerDrive-1)
+	Error          error
 }
 
 // ProgressCallback is called during testing to report progress updates
@@ -50,7 +50,7 @@ type DrivePerf struct {
 	FileSize         uint64
 	IOPerDrive       int
 	WriteOnly        bool
-	SyncMode         bool // Use O_DSYNC/O_SYNC instead of O_DIRECT
+	SyncMode         bool             // Use O_DSYNC/O_SYNC instead of O_DIRECT
 	ProgressCallback ProgressCallback // Optional callback for real-time progress updates
 }
 
@@ -81,8 +81,8 @@ func (d *DrivePerf) runTests(ctx context.Context, path string, testUUID string) 
 	defer os.RemoveAll(testUUIDPath)
 
 	var wg sync.WaitGroup
-	wg.Add(int(d.IOPerDrive))
-	for i := 0; i < int(d.IOPerDrive); i++ {
+	wg.Add(d.IOPerDrive)
+	for i := 0; i < d.IOPerDrive; i++ {
 		go func(idx int) {
 			defer wg.Done()
 			iopath := testPath + "-" + strconv.Itoa(idx)
@@ -178,7 +178,7 @@ func (d *DrivePerf) Run(ctx context.Context, paths ...string) (results []*DriveP
 	return results, nil
 }
 
-// Run drive performance and render it
+// RunAndRender runs drive performance and renders it.
 func (d *DrivePerf) RunAndRender(ctx context.Context, paths ...string) error {
 	results, err := d.Run(ctx, paths...)
 	if err != nil {

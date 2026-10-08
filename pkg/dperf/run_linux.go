@@ -37,11 +37,7 @@ func (n nullWriter) Write(b []byte) (int, error) {
 	return len(b), nil
 }
 
-func (d *DrivePerf) runReadTest(ctx context.Context, path string, data []byte) (uint64, error) {
-	return d.runReadTestWithIndex(ctx, path, data, 0)
-}
-
-func (d *DrivePerf) runReadTestWithIndex(ctx context.Context, path string, data []byte, ioIndex int) (uint64, error) {
+func (d *DrivePerf) runReadTestWithIndex(_ context.Context, path string, data []byte, ioIndex int) (uint64, error) {
 	startTime := time.Now()
 
 	// For reads, prefer O_DIRECT to bypass page cache when possible
@@ -66,13 +62,13 @@ func (d *DrivePerf) runReadTestWithIndex(ctx context.Context, path string, data 
 	}
 
 	progressWriter := &progressTracker{
-		w:           &nullWriter{},
-		callback:    d.ProgressCallback,
-		path:        filepath.Dir(filepath.Dir(path)), // Get the drive path (parent of testUUID dir)
-		phase:       "read",
-		totalBytes:  d.FileSize,
-		ioIndex:     ioIndex,
-		startTime:   startTime,
+		w:          &nullWriter{},
+		callback:   d.ProgressCallback,
+		path:       filepath.Dir(filepath.Dir(path)), // Get the drive path (parent of testUUID dir)
+		phase:      "read",
+		totalBytes: d.FileSize,
+		ioIndex:    ioIndex,
+		startTime:  startTime,
 	}
 
 	n, err := copyAligned(progressWriter, r, data, int64(d.FileSize), r.Fd(), !useDirectIO)
@@ -116,22 +112,7 @@ func fdatasync(fd int) error {
 	return syscall.Fdatasync(fd)
 }
 
-func fadviseSequential(f *os.File, length int64) error {
-	return unix.Fadvise(int(f.Fd()), 0, length, unix.FADV_SEQUENTIAL)
-}
-
-type nullReader struct {
-	ctx context.Context
-}
-
-func (n nullReader) Read(b []byte) (int, error) {
-	if n.ctx.Err() != nil {
-		return 0, n.ctx.Err()
-	}
-	return len(b), nil
-}
-
-func newRandomReader(ctx context.Context) io.Reader {
+func newRandomReader(_ context.Context) io.Reader {
 	r, err := rng.NewReader()
 	if err != nil {
 		panic(err)
@@ -262,10 +243,6 @@ func copyAligned(w io.Writer, r io.Reader, alignedBuf []byte, totalSize int64, f
 	}
 }
 
-func (d *DrivePerf) runWriteTest(ctx context.Context, path string, data []byte) (uint64, error) {
-	return d.runWriteTestWithIndex(ctx, path, data, 0)
-}
-
 func (d *DrivePerf) runWriteTestWithIndex(ctx context.Context, path string, data []byte, ioIndex int) (uint64, error) {
 	if err := os.MkdirAll(filepath.Dir(path), 0o755); err != nil {
 		return 0, err
@@ -289,13 +266,13 @@ func (d *DrivePerf) runWriteTestWithIndex(ctx context.Context, path string, data
 	}
 
 	progressWriter := &progressTracker{
-		w:           w,
-		callback:    d.ProgressCallback,
-		path:        filepath.Dir(filepath.Dir(path)), // Get the drive path (parent of testUUID dir)
-		phase:       "write",
-		totalBytes:  d.FileSize,
-		ioIndex:     ioIndex,
-		startTime:   startTime,
+		w:          w,
+		callback:   d.ProgressCallback,
+		path:       filepath.Dir(filepath.Dir(path)), // Get the drive path (parent of testUUID dir)
+		phase:      "write",
+		totalBytes: d.FileSize,
+		ioIndex:    ioIndex,
+		startTime:  startTime,
 	}
 
 	n, err := copyAligned(progressWriter, newRandomReader(ctx), data, int64(d.FileSize), w.Fd(), d.SyncMode)

@@ -50,7 +50,6 @@ var (
 	syncMode   = false
 	blockSize  = "4MiB"
 	fileSize   = "1GiB"
-	cpuNode    = 0
 	ioPerDrive = 4
 	profileDir = "./"
 
@@ -335,11 +334,7 @@ func runWithUI(ctx context.Context, paths []string, serial bool, blockSize, file
 
 	// Run the performance test in a goroutine
 	go func() {
-		results, err := perf.Run(ctx, paths...)
-		if err != nil {
-			// Send error through progress channel? Or handle differently
-			// For now, just close the channel
-		}
+		results, _ := perf.Run(ctx, paths...)
 
 		// Send completion message
 		p.Send(completeMsg{Results: results})
