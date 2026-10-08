@@ -1,4 +1,4 @@
-module github.com/minio/dperf
+module github.com/lgcorzo/dperf
 
 go 1.24.0
 
@@ -14,7 +14,6 @@ require (
 	github.com/fatih/color v1.18.0
 	github.com/felixge/fgprof v0.9.5
 	github.com/google/uuid v1.6.0
-	github.com/minio/pkg/v3 v3.0.28
 	github.com/ncw/directio v1.0.5
 	github.com/spf13/cobra v1.8.1
 	github.com/spf13/viper v1.19.0
@@ -38,6 +37,7 @@ require (
 	github.com/mattn/go-isatty v0.0.20 // indirect
 	github.com/mattn/go-localereader v0.0.1 // indirect
 	github.com/mattn/go-runewidth v0.0.16 // indirect
+	github.com/minio/pkg/v3 v3.0.28
 	github.com/mitchellh/mapstructure v1.5.0 // indirect
 	github.com/muesli/ansi v0.0.0-20230316100256-276c6243b2f6 // indirect
 	github.com/muesli/cancelreader v0.2.2 // indirect
@@ -60,3 +60,5 @@ require (
 	gopkg.in/ini.v1 v1.67.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
+
+replace github.com/minio/pkg/v3 => github.com/lgcorzo/pkg/v3 v3.0.28

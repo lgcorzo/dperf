@@ -1,15 +1,15 @@
 project_name: dperf
 
 release:
-   name_template: "Release version {{.Version}}"
+  name_template: "Release version {{.Version}}"
 
-   github:
-    owner: minio
+  github:
+    owner: lgcorzo
     name: dperf
 
 before:
   hooks:
-    - go mod tidy -compat=1.19
+    - go mod tidy
 
 builds:
   -
@@ -26,7 +26,7 @@ builds:
       - -trimpath
       - --tags=kqueue
     ldflags:
-      - "-s -w -X github.com/minio/dperf/cmd.Version={{.Version}}"
+      - "-s -w -X github.com/lgcorzo/dperf/cmd.Version={{.Version}}"
 
 archives:
   -
@@ -35,23 +35,14 @@ archives:
 
 nfpms:
   -
-    vendor: MinIO, Inc.
-    homepage: https://github.com/minio/dperf
-    maintainer: MinIO Development <dev@min.io>
+    vendor: Sovereign Ecosystem
+    homepage: https://github.com/lgcorzo/dperf
+    maintainer: Sovereign Ecosystem Maintenance <dev@lgcorzo.dev>
     description: Dperf is a drive performance measurement tool.
     license: GNU Affero General Public License v3.0
     formats:
       - deb
       - rpm
-
-signs:
-  -
-    signature: "${artifact}.minisig"
-    cmd: "sh"
-    args:
-      - '-c'
-      - 'minisign -s /media/${USER}/minio/minisign.key -Sm ${artifact} < /media/${USER}/minio/minisign-passphrase'
-    artifacts: all
 
 snapshot:
   name_template: v0.0.0@{{.ShortCommit}}
@@ -61,7 +52,7 @@ changelog:
 
 dockers:
 - image_templates:
-  - "quay.io/minio/dperf:{{ .Tag }}-amd64"
+  - "quay.io/lgcorzo/dperf:{{ .Tag }}-amd64"
   use: buildx
   dockerfile: Dockerfile
   extra_files:
@@ -70,7 +61,7 @@ dockers:
   build_flag_templates:
   - "--platform=linux/amd64"
 - image_templates:
-  - "quay.io/minio/dperf:{{ .Tag }}-ppc64le"
+  - "quay.io/lgcorzo/dperf:{{ .Tag }}-ppc64le"
   use: buildx
   dockerfile: Dockerfile
   extra_files:
@@ -79,7 +70,7 @@ dockers:
   build_flag_templates:
   - "--platform=linux/ppc64le"
 - image_templates:
-  - "quay.io/minio/dperf:{{ .Tag }}-s390x"
+  - "quay.io/lgcorzo/dperf:{{ .Tag }}-s390x"
   use: buildx
   dockerfile: Dockerfile
   extra_files:
@@ -88,7 +79,7 @@ dockers:
   build_flag_templates:
   - "--platform=linux/s390x"
 - image_templates:
-  - "quay.io/minio/dperf:{{ .Tag }}-arm64"
+  - "quay.io/lgcorzo/dperf:{{ .Tag }}-arm64"
   use: buildx
   goarch: arm64
   dockerfile: Dockerfile
@@ -98,15 +89,15 @@ dockers:
   build_flag_templates:
   - "--platform=linux/arm64"
 docker_manifests:
-- name_template: quay.io/minio/dperf:{{ .Tag }}
+- name_template: quay.io/lgcorzo/dperf:{{ .Tag }}
   image_templates:
-  - quay.io/minio/dperf:{{ .Tag }}-amd64
-  - quay.io/minio/dperf:{{ .Tag }}-arm64
-  - quay.io/minio/dperf:{{ .Tag }}-ppc64le
-  - quay.io/minio/dperf:{{ .Tag }}-s390x
-- name_template: quay.io/minio/dperf:latest
+  - quay.io/lgcorzo/dperf:{{ .Tag }}-amd64
+  - quay.io/lgcorzo/dperf:{{ .Tag }}-arm64
+  - quay.io/lgcorzo/dperf:{{ .Tag }}-ppc64le
+  - quay.io/lgcorzo/dperf:{{ .Tag }}-s390x
+- name_template: quay.io/lgcorzo/dperf:latest
   image_templates:
-  - quay.io/minio/dperf:{{ .Tag }}-amd64
-  - quay.io/minio/dperf:{{ .Tag }}-arm64
-  - quay.io/minio/dperf:{{ .Tag }}-ppc64le
-  - quay.io/minio/dperf:{{ .Tag }}-s390x
+  - quay.io/lgcorzo/dperf:{{ .Tag }}-amd64
+  - quay.io/lgcorzo/dperf:{{ .Tag }}-arm64
+  - quay.io/lgcorzo/dperf:{{ .Tag }}-ppc64le
+  - quay.io/lgcorzo/dperf:{{ .Tag }}-s390x

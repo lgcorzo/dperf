@@ -1,5 +1,5 @@
 FROM scratch
-MAINTAINER MinIO Development "dev@min.io"
+LABEL maintainer="Sovereign Ecosystem Maintenance <dev@lgcorzo.dev>"
 
 COPY ./dperf /dperf
 
