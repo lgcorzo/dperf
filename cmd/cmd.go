@@ -31,7 +31,7 @@ import (
 	"github.com/charmbracelet/x/term"
 	"github.com/dustin/go-humanize"
 	"github.com/felixge/fgprof"
-	"github.com/minio/dperf/pkg/dperf"
+	"github.com/lgcorzo/dperf/pkg/dperf"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )

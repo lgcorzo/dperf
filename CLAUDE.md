@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-**dperf** is a MinIO drive performance measurement tool that identifies slow drives by performing parallel I/O operations on multiple file paths. It measures read/write throughput and displays results sorted by performance (fastest drives first).
+**dperf** is a drive performance measurement tool in the Sovereign MinIO Ecosystem that identifies slow drives by performing parallel I/O operations on multiple file paths. It measures read/write throughput and displays results sorted by performance (fastest drives first).
 
 ## Build & Test Commands
 
@@ -16,7 +16,7 @@ make build           # Builds dperf binary with CGO_ENABLED=0
 ### Install
 ```bash
 make install         # Builds and installs to $GOPATH/bin/dperf
-go install github.com/minio/dperf@latest  # Install from source
+go install github.com/lgcorzo/dperf@latest  # Install from source
 ```
 
 ### Run
@@ -78,7 +78,7 @@ Platform-specific I/O implementation using direct I/O (O_DIRECT):
 - `copyAligned()`: Core I/O function handling aligned/unaligned buffers for direct I/O
 - Uses `syscall.Fdatasync()` for write durability
 - Uses `unix.Fadvise(FADV_SEQUENTIAL)` for read optimization
-- Random data generation via `github.com/minio/pkg/v3/rng`
+- Random data generation via `github.com/lgcorzo/pkg/v3/rng`
 
 #### `pkg/dperf/run_other.go` (Non-Linux)
 Stub implementation returning `ErrNotImplemented` - dperf only works on Linux.
@@ -86,7 +86,7 @@ Stub implementation returning `ErrNotImplemented` - dperf only works on Linux.
 #### `pkg/dperf/result.go`
 Output formatting:
 - `DrivePerfResult`: Contains Path, WriteThroughput, ReadThroughput, Error
-- `render()`: Displays results in colored tables using `github.com/minio/pkg/v3/console`
+- `render()`: Displays results in colored tables using `github.com/lgcorzo/pkg/v3/console`
 - Shows per-drive stats in verbose mode, always shows aggregate TotalWRITE/TotalREAD
 
 ### Key Technical Details
@@ -118,6 +118,6 @@ See `dperf.yaml` for example Job that benchmarks PersistentVolumeClaims (useful 
 ## Requirements
 
 - Linux OS (uses O_DIRECT, unix.Fadvise, syscall.Fdatasync)
-- Go 1.17+ for building
+- Go 1.23+ for building
 - Write permissions on target paths
 - Block devices supporting direct I/O

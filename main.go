@@ -24,7 +24,7 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/minio/dperf/cmd"
+	"github.com/lgcorzo/dperf/cmd"
 )
 
 func main() {

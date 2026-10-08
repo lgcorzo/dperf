@@ -28,5 +28,5 @@ export CGO_ENABLED=0
 export GO111MODULE=on
 
 go build -tags "osusergo netgo static_build" \
-   -ldflags="-X github.com/minio/dperf/cmd.Version=${BUILD_VERSION} -extldflags=-static" \
-   github.com/minio/dperf
+   -ldflags="-X github.com/lgcorzo/dperf/cmd.Version=${BUILD_VERSION} -extldflags=-static" \
+   github.com/lgcorzo/dperf
