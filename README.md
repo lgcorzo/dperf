@@ -1,3 +1,5 @@
+Maintained fork of [minio/dperf](https://github.com/minio/dperf). It applies security patches and maintenance fixes on top of upstream. Part of the [Dark Gravity](https://github.com/lgcorzo/rust_CACD_autonomous_factory) factory. License: AGPL-3.0.
+
 # dperf - Distributed Drive Performance Benchmarking Tool
 
 [![Go Report Card](https://goreportcard.com/badge/github.com/lgcorzo/dperf)](https://goreportcard.com/report/github.com/lgcorzo/dperf)
@@ -355,3 +357,10 @@ dperf is released under the [GNU Affero General Public License v3.0](https://www
 
 - **Issues**: [GitHub Issues](https://github.com/lgcorzo/dperf/issues)
 - **Sovereign Ecosystem**: [lgcorzo Infrastructure](https://github.com/lgcorzo)
+
+---
+
+### Fork Maintenance & Agent Transparency
+
+- **Changes vs. Upstream:** Security dependency updates, CI/CD workflow fixes, and CodeQL remediation are tracked in the [commit history](https://github.com/lgcorzo/dperf/commits) and [Pull Requests](https://github.com/lgcorzo/dperf/pulls?q=is%3Apr).
+- **Agent Tagging (`[agent]`):** Commits and pull requests generated automatically by agents in the Dark Gravity pipeline are prefixed with `[agent]` to distinguish automated maintenance from manual work.
